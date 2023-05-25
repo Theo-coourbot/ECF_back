@@ -8,7 +8,7 @@ public class Center {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "center-id")
+    @Column(name = "center_id")
     int id;
 
     String name;

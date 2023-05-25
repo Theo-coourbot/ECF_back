@@ -9,9 +9,7 @@ import java.util.List;
 
 public class CenterService extends MainService implements Repository<Center>   {
 
-    public CenterService() {
-        super();
-    }
+
 
     @Override
     public boolean create(Center center) {
@@ -19,7 +17,9 @@ public class CenterService extends MainService implements Repository<Center>   {
         session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(center);
+        session.getTransaction().commit();
         session.close();
+            System.out.println("centre ajouter");
         return true;
 
         } else {
@@ -82,5 +82,14 @@ public class CenterService extends MainService implements Repository<Center>   {
         session.close();
 
         return centers;
+    }
+    public void begin(){
+        session = sessionFactory.openSession();
+    }
+
+    public void end(){
+
+
+        sessionFactory.close();
     }
 }
