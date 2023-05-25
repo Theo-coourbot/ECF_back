@@ -22,10 +22,22 @@ public class Activity {
     @ManyToMany(mappedBy = "activities")
     List<Adhering> adherings;
 
+    @ManyToOne
+    @JoinColumn(name = "center_id")
+    Center centeractivity;
+
 
     public Activity() {
     }
 
+
+    public Center getCenteractivity() {
+        return centeractivity;
+    }
+
+    public void setCenteractivity(Center centeractivity) {
+        this.centeractivity = centeractivity;
+    }
 
     public int getIdCours() {
         return idCours;
@@ -70,6 +82,7 @@ public class Activity {
                 ", name='" + name + '\'' +
                 ", dateSession=" + dateSession +
                 ", adherings=" + adherings +
+                ", centeractivity=" + centeractivity +
                 '}';
     }
 }

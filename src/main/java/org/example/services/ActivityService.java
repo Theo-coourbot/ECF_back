@@ -9,6 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityService extends MainService implements Repository<Activity> {
+
+    public  boolean joinActivityToCenter(Activity activity){
+        if (activity != null){
+
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+
+
+
+
+            session.update(activity);
+            session.getTransaction().commit();
+            session.close();
+            System.out.println("activite lie a la salle : " + activity.getCenteractivity().getName());
+            return true;
+        } else {
+            System.out.println("erreur");
+            return false;
+        }
+    }
     @Override
     public boolean create(Activity activity) {
         if (activity != null){

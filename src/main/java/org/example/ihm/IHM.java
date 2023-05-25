@@ -230,6 +230,9 @@ public static void  deleteAdhering(){
                 case ("4"):
                     deleteActivity();
                     break;
+                case ("5"):
+                    addActivityToCenter();
+                    break;
                 case ("0"):
                     start();
                     break;
@@ -243,6 +246,24 @@ public static void  deleteAdhering(){
 
         } while (!choice.equals("0"));
         activityService.end();
+    }
+
+    // method suplementaire
+    public static  void addActivityToCenter(){
+        System.out.println("id de l'activite a enrgistre");
+        seeAllActivity();
+        int id;
+        id = scanner.nextInt();
+        scanner.nextLine();
+        Activity activity = activityService.findById(id);
+        System.out.println("dans quelle centre se deroulera l'activite");
+        seeAllCenter();
+        id = scanner.nextInt();
+        scanner.nextLine();
+        Center center = centerService.findById(id);
+        activity.setCenteractivity(center);
+        activityService.joinActivityToCenter(activity);
+
     }
 
 
@@ -298,6 +319,7 @@ public static void  deleteAdhering(){
             System.out.println("liste des activités");
             for (Activity a : activities){
                 System.out.println(a.getIdCours()+ " // nom du cours : "+ a.getName() + "// date " + a.getDateSession());
+                System.out.println(a.getCenteractivity() != null ?  " se deroulera a la salle " + a.getCenteractivity().getName()  :  " pas de salle lie");
             }
 
         }
@@ -450,6 +472,7 @@ public static void  deleteAdhering(){
         System.out.println("2. voir les activités");
         System.out.println("3. modifier une activité");
         System.out.println("4. supprimer une activité");
+        System.out.println("5. lié l'activite a un centre");
         System.out.println("0. retour");
 
     }

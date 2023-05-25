@@ -17,9 +17,19 @@ public class Center {
 
     @OneToMany(mappedBy = "center")
     List<Adhering> adheringList;
+    @OneToMany(mappedBy = "centeractivity")
+    List<Activity> activityList;
 
 
     public Center() {
+    }
+
+    public List<Activity> getActivityList() {
+        return activityList;
+    }
+
+    public void setActivityList(List<Activity> activityList) {
+        this.activityList = activityList;
     }
 
     public int getId() {
@@ -64,6 +74,7 @@ public class Center {
                 ", name='" + name + '\'' +
                 ", adress='" + adress + '\'' +
                 ", adheringList=" + adheringList +
+                ", activityList=" + activityList +
                 '}';
     }
 }

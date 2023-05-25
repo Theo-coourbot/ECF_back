@@ -24,7 +24,7 @@ public class AdheringService extends MainService implements Repository<Adhering>
             session.update(adhering);
             session.getTransaction().commit();
             session.close();
-            System.out.println("adhérant inscris a le salle : " + adhering.getCenter().getName());
+            System.out.println("adhérant inscris a la salle : " + adhering.getCenter().getName());
             return true;
         } else {
             System.out.println("erreur");
