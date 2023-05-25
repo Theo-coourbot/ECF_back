@@ -14,7 +14,7 @@ public class Adhering {
     String firstName;
     int age;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "adhering_activity",
             joinColumns = @JoinColumn(name = "adhering_id"),

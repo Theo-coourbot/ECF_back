@@ -73,6 +73,14 @@ public class IHM {
                 case ("4"):
                     deleteAdhering();
                     break;
+
+                case ("5"):
+                    registerAdheringForActivity();
+                    break;
+
+                case ("6"):
+                    registerAdheringCenter();
+                    break;
                 case ("0"):
                     start();
                     break;
@@ -89,7 +97,42 @@ public class IHM {
         adheringService.end();
 
     }
+//    adherent methode
 
+public static  void  registerAdheringCenter(){
+    System.out.println("id de l'adherent a enrgistre");
+    seeAllAdhering();
+    int id;
+    id = scanner.nextInt();
+    scanner.nextLine();
+    Adhering adhering = adheringService.findById(id);
+    System.out.println("a quelle salle voulez vous vous incrire");
+    seeAllCenter();
+    id = scanner.nextInt();
+    scanner.nextLine();
+    Center center = centerService.findById(id);
+    adhering.setCenter(center);
+    adheringService.joinAdheringToCenter(adhering);
+
+}
+
+public  static  void  registerAdheringForActivity(){
+    System.out.println("id de l'adherent a enrgistre");
+    seeAllAdhering();
+    int id;
+    id = scanner.nextInt();
+    scanner.nextLine();
+    Adhering adhering = adheringService.findById(id);
+    System.out.println("id de l'activite");
+    seeAllActivity();
+    id = scanner.nextInt();
+    scanner.nextLine();
+    Activity activity = activityService.findById(id);
+    adhering.addActivity(activity);
+    adheringService.addAdheringActivity(adhering);
+    System.out.println("inscription a l'activité oki");
+
+}
 //    crud adherent
 
 public static void  deleteAdhering(){
@@ -100,6 +143,7 @@ public static void  deleteAdhering(){
     scanner.nextLine();
     Adhering adhering = adheringService.findById(id);
     adheringService.delete(adhering);
+
 }
 
     public static void  updateAdhering(){
@@ -128,6 +172,7 @@ public static void  deleteAdhering(){
     }
     public static void  seeAllAdhering(){
         List<Adhering> adherings = null;
+        int i = 1;
         adherings = adheringService.findAll();
         if (adherings == null){
             System.out.println("aucun adherent présent");
@@ -135,6 +180,15 @@ public static void  deleteAdhering(){
             System.out.println("liste des adherents");
             for (Adhering a : adherings){
                 System.out.println( a.getId()+" || " + a.getLastName()+ " || "+ a.getFirstName() + " || age :  " + a.getAge() );
+                System.out.println(a.getCenter() != null ?"nom du centre : " + a.getCenter().getName() : " pas de centre atitré ");
+                if (a.getActivities().size() > 0){
+                    for (Activity activity : a.getActivities() ){
+
+                        System.out.println(" activite" + i +" : " + activity.getName() +" date de l'activite : " +activity.getDateSession());
+                        i++;
+                    }
+                    i=1;
+                }
             }
 
         }
@@ -385,7 +439,8 @@ public static void  deleteAdhering(){
         System.out.println("2. voir les adherents");
         System.out.println("3. modifier un adherent");
         System.out.println("4. supprimer un adherent");
-        System.out.println("5. inscrire un adherant a une activite");
+        System.out.println("5. s'inscrire a une activite");
+        System.out.println("6. s'inscrire a un centre");
 
         System.out.println("0. retour");
 

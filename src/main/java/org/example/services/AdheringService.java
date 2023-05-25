@@ -10,6 +10,47 @@ import java.util.List;
 
 public class AdheringService extends MainService implements Repository<Adhering> {
 
+
+
+    public boolean joinAdheringToCenter(Adhering adhering){
+        if (adhering != null){
+
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+
+
+
+
+            session.update(adhering);
+            session.getTransaction().commit();
+            session.close();
+            System.out.println("adhérant inscris a le salle : " + adhering.getCenter().getName());
+            return true;
+        } else {
+            System.out.println("erreur");
+            return false;
+        }
+    }
+    public boolean addAdheringActivity(Adhering adhering){
+        if (adhering != null){
+//            System.out.println(activity.getIdCours());
+//            System.out.println(adhering.getId());
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+
+
+
+
+            session.update(adhering);
+            session.getTransaction().commit();
+            session.close();
+            System.out.println("adhérant inscris a l'activite");
+            return true;
+        } else {
+            System.out.println("erreur");
+            return false;
+        }
+    }
     @Override
     public boolean create(Adhering adhering) {
         if (adhering != null){
