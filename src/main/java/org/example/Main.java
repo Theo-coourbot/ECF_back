@@ -1,7 +1,10 @@
 package org.example;
 
+import org.example.ihm.IHM;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        IHM ihm = new IHM();
+        ihm.start();
     }
 }
