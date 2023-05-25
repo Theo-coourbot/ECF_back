@@ -1,8 +1,10 @@
 package org.example.ihm;
 
 import org.example.entities.Activity;
+import org.example.entities.Adhering;
 import org.example.entities.Center;
 import org.example.services.ActivityService;
+import org.example.services.AdheringService;
 import org.example.services.CenterService;
 
 import java.text.SimpleDateFormat;
@@ -13,6 +15,7 @@ import java.util.Scanner;
 public class IHM {
      static Scanner scanner = new Scanner(System.in);
      static CenterService centerService = new CenterService();
+     static AdheringService adheringService = new AdheringService();
      static ActivityService activityService = new ActivityService();
 
 
@@ -59,12 +62,16 @@ public class IHM {
             choice = s.nextLine();
             switch (choice){
                 case ("1"):
+                    addAdhering();
                     break;
                 case ("2"):
+                    seeAllAdhering();
                     break;
                 case ("3"):
+                    updateAdhering();
                     break;
                 case ("4"):
+                    deleteAdhering();
                     break;
                 case ("0"):
                     start();
@@ -79,6 +86,74 @@ public class IHM {
 
 
         } while (!choice.equals("0"));
+        adheringService.end();
+
+    }
+
+//    crud adherent
+
+public static void  deleteAdhering(){
+    System.out.println("id de l'adherent a supprimer");
+    seeAllAdhering();
+    int id;
+    id = scanner.nextInt();
+    scanner.nextLine();
+    Adhering adhering = adheringService.findById(id);
+    adheringService.delete(adhering);
+}
+
+    public static void  updateAdhering(){
+        System.out.println("id de l'adherent a modifier");
+
+        seeAllAdhering();
+        int id;
+        id = scanner.nextInt();
+        scanner.nextLine();
+        Adhering adhering = adheringService.findById(id);
+        System.out.println("nouveau prenom de l'adherent");
+        String firsNameAdhering = scanner.nextLine();
+        System.out.println("nouveau nom de l'adherent");
+        String lastNameAdhering = scanner.nextLine();
+        System.out.println("nouvelle age de l'adherent");
+        int ageAdhering = scanner.nextInt();
+        scanner.nextLine();
+
+        adhering.setFirstName(firsNameAdhering);
+        adhering.setLastName(lastNameAdhering);
+        adhering.setAge(ageAdhering);
+        adheringService.update(adhering);
+        System.out.println("adherent actualise");
+
+
+    }
+    public static void  seeAllAdhering(){
+        List<Adhering> adherings = null;
+        adherings = adheringService.findAll();
+        if (adherings == null){
+            System.out.println("aucun adherent présent");
+        } else {
+            System.out.println("liste des adherents");
+            for (Adhering a : adherings){
+                System.out.println( a.getId()+" || " + a.getLastName()+ " || "+ a.getFirstName() + " || age :  " + a.getAge() );
+            }
+
+        }
+    }
+    public static void addAdhering(){
+        Adhering adhering = new Adhering();
+        System.out.println("ajout de l'adherent");
+        System.out.println("nom de l'adherent");
+        String nameAdhering = scanner.nextLine();
+        System.out.println("prenom de l'adherent");
+        String firstNameAdhering = scanner.nextLine();
+        System.out.println("age de l'adherent");
+        int ageAdhering = scanner.nextInt();
+        scanner.nextLine();
+       adhering.setLastName(nameAdhering);
+       adhering.setFirstName(firstNameAdhering);
+        adhering.setAge(ageAdhering);
+        adheringService.create(adhering);
+
     }
 
     // ==========================================
@@ -117,6 +192,8 @@ public class IHM {
     }
 
 
+
+
     //crud activite
     public static void  deleteActivity(){
         System.out.println("id de l'activite a supprimer");
@@ -136,7 +213,7 @@ public class IHM {
         id = scanner.nextInt();
         scanner.nextLine();
         Activity activity = activityService.findById(id);
-        System.out.println("nouveau nom du centre");
+        System.out.println("nouveau nom de l'activite");
         String nameActivity = scanner.nextLine();
         System.out.println("modifier la date 1 : oui autre non");
         choice = scanner.nextLine();
@@ -162,9 +239,9 @@ public class IHM {
         List<Activity> activities = null;
         activities = activityService.findAll();
         if (activities == null){
-            System.out.println("aucun centre présent");
+            System.out.println("aucune activité présente");
         } else {
-            System.out.println("liste des centres");
+            System.out.println("liste des activités");
             for (Activity a : activities){
                 System.out.println(a.getIdCours()+ " // nom du cours : "+ a.getName() + "// date " + a.getDateSession());
             }
@@ -172,15 +249,23 @@ public class IHM {
         }
     }
     public static void addActivity(){
-        System.out.println("ajout de centre");
-        System.out.println("nom du centre");
-        String nameCenter = scanner.nextLine();
-        System.out.println("adresse du centre");
-        String adressCenter = scanner.nextLine();
-        Center center = new Center();
-        center.setName(nameCenter);
-        center.setAdress(adressCenter);
-        centerService.create(center);
+        Activity activity = new Activity();
+        System.out.println("ajout de l'activité");
+        System.out.println("nom de l'activité");
+        String nameActivity = scanner.nextLine();
+        System.out.println("date du centre");
+        System.out.println("date de l'activite format dd/MM/yyyy");
+        String dateStr = scanner.nextLine();
+        try {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateStr);
+            activity.setDateSession(date);
+
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        activity.setName(nameActivity);
+        activityService.create(activity);
 
     }
 
@@ -295,11 +380,13 @@ public class IHM {
         System.out.println("0.quiter");
     }
     public static void displayInfoAdhering(){
-        System.out.println("=====gestion d'adherant =====");
-        System.out.println("1. inscrption d'adherant");
-        System.out.println("2. voir les adherants");
-        System.out.println("3. modifier un adherant");
-        System.out.println("4. supprimer un adherant");
+        System.out.println("=====gestion d'adherent =====");
+        System.out.println("1. inscrption d'adherent");
+        System.out.println("2. voir les adherents");
+        System.out.println("3. modifier un adherent");
+        System.out.println("4. supprimer un adherent");
+        System.out.println("5. inscrire un adherant a une activite");
+
         System.out.println("0. retour");
 
     }public static void displayInfoActivity(){

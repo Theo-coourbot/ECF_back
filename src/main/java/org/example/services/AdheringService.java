@@ -1,53 +1,54 @@
 package org.example.services;
 
 import org.example.entities.Activity;
-import org.example.entities.Center;
+import org.example.entities.Adhering;
 import org.example.interfaces.Repository;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityService extends MainService implements Repository<Activity> {
+public class AdheringService extends MainService implements Repository<Adhering> {
+
     @Override
-    public boolean create(Activity activity) {
-        if (activity != null){
+    public boolean create(Adhering adhering) {
+        if (adhering != null){
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(activity);
+            session.save(adhering);
             session.getTransaction().commit();
             session.close();
-            System.out.println("activité ajouter");
+            System.out.println("adhérant ajouter");
             return true;
 
         } else {
-            System.out.println("aucune valeur dans l'activite");
+            System.out.println("aucune valeur a l'adherant");
             return false;
         }
     }
 
     @Override
-    public boolean update(Activity activity) {
-        if (activity != null){
+    public boolean update(Adhering adhering) {
+        if (adhering != null){
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.update(activity);
+            session.update(adhering);
             session.getTransaction().commit();
             session.close();
 
             return true;
         } else {
-            System.out.println("aucune valeur dans l'activite");
+            System.out.println("aucune  valeur a l'adherant");
             return false;
         }
     }
 
     @Override
-    public boolean delete(Activity activity) {
-        if (activity != null){
+    public boolean delete(Adhering adhering) {
+        if (adhering != null){
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.delete(activity);
+            session.delete(adhering);
             session.getTransaction().commit();
             session.close();
 
@@ -58,32 +59,29 @@ public class ActivityService extends MainService implements Repository<Activity>
         }
     }
 
-
     @Override
-    public Activity findById(int id) {
-        Activity activity = null;
+    public Adhering findById(int id) {
+        Adhering adhering = null;
         session = sessionFactory.openSession();
-        activity  = (Activity) session.get(Activity.class,id);
+        adhering  = (Adhering) session.get(Adhering.class,id);
         session.close();
-        if (activity == null){
-            System.out.println("activite introuvable verifier l'id taper");
+        if (adhering == null){
+            System.out.println("adherant introuvable verifier l'id taper");
         }
-        return activity;
+        return adhering;
     }
 
     @Override
-    public List<Activity> findAll() {
-        List<Activity> activities = new ArrayList<>();
+    public List<Adhering> findAll() {
+        List<Adhering> adheringList = new ArrayList<>();
         session = sessionFactory.openSession();
-        Query<Activity> centerQuery = session.createQuery("from Activity ");
-        activities = centerQuery.list();
+        Query<Adhering> centerQuery = session.createQuery("from Adhering ");
+        adheringList = centerQuery.list();
         session.close();
 
-        return activities;
+        return adheringList;
     }
     public void end(){
-
-
         sessionFactory.close();
     }
 }
