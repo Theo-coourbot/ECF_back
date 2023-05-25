@@ -46,6 +46,9 @@ public class IHM {
 
 
     public static void displayMenuGeneral(){
+
+
+
         System.out.println("gestion de fitnessShark");
         System.out.println("1.gestion des adherants");
         System.out.println("2.gestion des activités");
