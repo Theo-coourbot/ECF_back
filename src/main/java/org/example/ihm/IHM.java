@@ -1,15 +1,6 @@
 package org.example.ihm;
 
-import org.example.entities.Activity;
-import org.example.entities.Adhering;
-import org.example.entities.Center;
-import org.example.services.ActivityService;
-import org.example.services.AdheringService;
-import org.example.services.CenterService;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 public class IHM {
