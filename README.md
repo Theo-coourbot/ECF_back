@@ -21,7 +21,7 @@ Pour le class l'adhérent sa donne ceci :
     List<Activity> activities;
 ```
 
-et l'activité :
+- et l'activité :
 ```
  @ManyToMany(mappedBy = "activities")
     List<Adhering> adherings;
@@ -38,3 +38,7 @@ Un adhérent peut avoir aucune ou une sale atribuée
 
 - Et inversement, du ***One To Many***
 un centre peut avoir zéro a une infinité d'adhérent;
+```
+ @OneToMany(mappedBy = "center")
+    List<Adhering> adheringList;
+```
