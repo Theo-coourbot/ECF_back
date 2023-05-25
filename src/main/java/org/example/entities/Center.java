@@ -1,9 +1,12 @@
 package org.example.entities;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+
 public class Center {
 
     @Id
@@ -15,9 +18,9 @@ public class Center {
 
     String adress;
 
-    @OneToMany(mappedBy = "center")
+    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
     List<Adhering> adheringList;
-    @OneToMany(mappedBy = "centeractivity")
+    @OneToMany(mappedBy = "centeractivity", cascade = CascadeType.ALL)
     List<Activity> activityList;
 
 
